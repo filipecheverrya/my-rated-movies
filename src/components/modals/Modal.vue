@@ -1,12 +1,27 @@
 <script setup lang="ts">
-import { useStore } from '../../store';
+import { useStore } from '../../store'
 import IconClose from '/icon-close.svg'
+
 const store = useStore()
+defineProps({
+  direction: {
+    type: String,
+    default: 'center'
+  }
+})
 </script>
 
 <template>
   <div class="w-[100vw] h-[100vh] bg-black opacity-75 fixed top-0 left-0"></div>
-  <div class="w-[100vw] h-[100vh] md:w-[80vw] md:h-[70vh] fixed top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 bg-white md:rounded-2xl py-4 px-6">
+  <div 
+    :class="[
+      'fixed bg-white md:rounded-2xl py-4 px-6',
+      {
+        'top-[50%] left-[50%] -translate-x-2/4 -translate-y-2/4 w-[100vw] h-[100vh] md:w-[80vw] md:h-[70vh]': direction === 'center',
+        'left-0 top-0 w-[80vw] h-[100vh]': direction === 'left'
+      }
+    ]"
+  >
     <header class="flex items-center justify-between flex-row-reverse">
       <div class="flex justify-end self-end">
         <button @click="store.toggleLoginModal()" class="p-1 cursor-pointer">

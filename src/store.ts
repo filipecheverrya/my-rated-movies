@@ -20,13 +20,17 @@ export const useStore = defineStore('store', {
       currentModal: 'login',
       registerModalError: '',
       registerModalLoader: false,
-      user: {} as TypeUser
+      user: {} as TypeUser,
+      showUserMenu: false,
     }
   },
   actions: {
     toggleLoginModal() {
       this.showLoginModal = !this.showLoginModal
       this.loginModalError = ''
+    },
+    toggleUserMenu() {
+      this.showUserMenu = !this.showUserMenu
     },
     async submitLogin(email: string | undefined, pass: string | undefined) {
       if (!email || !pass) return null

@@ -4,6 +4,7 @@ import IconUser from '/icon-user.svg'
 import IconMenu from '/icon-menu.svg'
 import Register from './modals/Register.vue'
 import { useStore } from '../store'
+import UserMenu from './modals/UserMenu.vue'
 
 const TITLE = 'My Rated Movies'
 const store = useStore()
@@ -21,12 +22,15 @@ const store = useStore()
       </button>
     </template>
     <template v-else>
-      <button class="flex items-center justify-center bg-transparent w10 h-10 cursor-pointer">
-        <img :src="IconMenu" alt="Menu" :width="22" :height="22" />
+      <button class="flex items-center justify-center bg-transparent w10 h-10 cursor-pointer" @click="store.toggleUserMenu()">
+        <img :src="IconMenu" alt="Menu" :width="32" :height="32" />
       </button>
     </template>
   </header>
   <template v-if="store.showLoginModal">
     <Register />
+  </template>
+  <template v-if="store.showUserMenu">
+    <UserMenu />
   </template>
 </template>
