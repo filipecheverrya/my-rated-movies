@@ -21,6 +21,14 @@ type TypeMovie = {
   Type: string
 }
 
+type TypeMovieSearch = {
+  Poster: string
+  Title: string
+  Type: string
+  Year: string
+  imdbID: string
+}
+
 const top5MoviesIds = [
   'tt27995114', // Dept. Q
   'tt31710249', // Stick
@@ -34,7 +42,9 @@ const STORAGE_NAME = 'MyRatedMovies'
 export const useMovieStore = defineStore('movie', {
   state: () => {
     return {
-      topRatedMovies: [] as TypeMovie[]
+      topRatedMovies: [] as TypeMovie[],
+      searchedList: [] as TypeMovieSearch[],
+      searchedListError: ''
     }
   },
   actions: {
@@ -59,6 +69,28 @@ export const useMovieStore = defineStore('movie', {
       } finally {
         window.localStorage.setItem(STORAGE_NAME, JSON.stringify(this.topRatedMovies))
       }
+    },
+    async getMoviesByString(value: string | undefined) {
+      if (!value || value.length < 3) return null
+      try {
+        const response = await fetch(`${baseURL}&s=${value}`)
+        const data = await response.json()
+        this.searchedListError = ''
+        if (!data.Search) {
+          this.searchedListError = data.Error
+          return null
+        }
+        this.searchedList = []
+        data.Search.map((item: TypeMovieSearch) => this.searchedList.push(item))
+      } catch (error) {
+        
+      } finally {
+
+      }
+    },
+    resetSearch() {
+      this.searchedList = []
+      this.searchedListError = ''
     }
   }
 })
