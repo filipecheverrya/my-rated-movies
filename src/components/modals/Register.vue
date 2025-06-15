@@ -2,9 +2,9 @@
 import { useTemplateRef } from 'vue'
 import IconLoader from '/icon-loader.svg'
 import Modal from './Modal.vue'
-import { useStore } from '../../store'
+import { useAppStore } from '../../store/app'
 
-const store = useStore()
+const store = useAppStore()
 const emailLogin = useTemplateRef('email-input')
 const passLogin = useTemplateRef('pass-input')
 const passRegister = useTemplateRef('pass-input-register')

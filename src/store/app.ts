@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { defineStore } from 'pinia'
-import { config } from './firebaseconfig'
+import { config } from '../firebaseconfig'
 import { 
   createUserWithEmailAndPassword, 
   getAuth, 
@@ -11,7 +11,7 @@ import {
 const app = initializeApp(config)
 const auth = getAuth(app)
 
-export const useStore = defineStore('store', {
+export const useAppStore = defineStore('app', {
   state: () => {
     return {
       showLoginModal: false,

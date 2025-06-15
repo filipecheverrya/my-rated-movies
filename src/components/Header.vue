@@ -3,11 +3,11 @@ import Logo from '/logo.svg'
 import IconUser from '/icon-user.svg'
 import IconMenu from '/icon-menu.svg'
 import Register from './modals/Register.vue'
-import { useStore } from '../store'
+import { useAppStore } from '../store/app'
 import UserMenu from './modals/UserMenu.vue'
 
 const TITLE = 'My Rated Movies'
-const store = useStore()
+const store = useAppStore()
 </script>
 
 <template>

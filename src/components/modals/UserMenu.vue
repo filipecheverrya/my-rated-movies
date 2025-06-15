@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useStore } from '../../store';
+import { useAppStore } from '../../store/app';
 import Modal from './Modal.vue';
 
-const store = useStore()
+const store = useAppStore()
 </script>
 
 <template>

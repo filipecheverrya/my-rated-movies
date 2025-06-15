@@ -27,4 +27,4 @@ dist-ssr
 firebase-debug.log
 **/google-services.json
 **/GoogleService-Info.plist
-src/firebaseconfig.ts
+.env
