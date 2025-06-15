@@ -12,7 +12,7 @@ const emailRegister = useTemplateRef('email-input-register')
 </script>
 
 <template>
-  <Modal>
+  <Modal @close="store.toggleLoginModal()">
     <template #header>
       <h2 class="text-2xl font-semibold">
         <template v-if="store.currentModal === 'login'">

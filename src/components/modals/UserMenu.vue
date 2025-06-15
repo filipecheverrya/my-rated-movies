@@ -6,10 +6,10 @@ const store = useStore()
 </script>
 
 <template>
-  <Modal direction="left">
+  <Modal direction="left" @close="store.toggleUserMenu()">
     <template #body>
       <div class="mt-4">
-        <p class="text-base text-nowrap text-ellipsis max-w-60 font-semibold text-center">
+        <p class="text-base text-nowrap text-ellipsis max-w-60 font-semibold text-center mx-auto">
           {{ store.user.email }}
         </p>
       </div>

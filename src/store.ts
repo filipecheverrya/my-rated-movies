@@ -39,14 +39,13 @@ export const useStore = defineStore('store', {
         this.loginModalLoader = true
         const credentials = await signInWithEmailAndPassword(auth, email, pass)
         this.user = credentials.user
-        // TODO: tratar mensagem de sucesso
+        this.toggleLoginModal()
       } catch (error: any) {
         if (error?.code === 'auth/invalid-credential') {
           this.loginModalError = 'Invalid credentials entered'
         }
       } finally {
         this.loginModalLoader = false
-        this.toggleLoginModal()
       }
     },
     async submitRegister(email: string | undefined, pass: string | undefined) {
