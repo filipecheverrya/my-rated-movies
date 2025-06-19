@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, useTemplateRef } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import IconLoader from '/icon-loader-dark.svg'
 import IconImdb from '/icon-imdb.svg'
 import IconMetacritic from '/images/icon-metacritic.png'
