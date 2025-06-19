@@ -21,7 +21,7 @@ export const useAppStore = defineStore('app', {
       registerModalError: '',
       registerModalLoader: false,
       user: {} as TypeUser,
-      showUserMenu: false,
+      showUserMenu: false
     }
   },
   actions: {

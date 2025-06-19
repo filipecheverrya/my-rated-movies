@@ -29,6 +29,10 @@ const handleClearSearchInputClick = () => {
   searchInputRef.value?.focus()
   storeMovies.resetSearch()
 }
+const submitSearch = async () => {
+  await storeMovies.getMoviesByString(searchValue.value)
+  handleSearchInputBlur()
+}
 </script>
 
 <template>
@@ -48,7 +52,7 @@ const handleClearSearchInputClick = () => {
         'w-0 overflow-hidden': !inputSearchFocused, 
         'fixed w-full p-4 left-2/4 -translate-x-2/4 bg-white': inputSearchFocused 
       }]">
-        <form @submit.prevent="storeMovies.getMoviesByString(searchValue)">
+        <form @submit.prevent="submitSearch">
           <input 
             type="text" 
             name="search" 

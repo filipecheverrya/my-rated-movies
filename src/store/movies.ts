@@ -19,6 +19,10 @@ type TypeMovie = {
   imdbVotes: string
   imdbID: string
   Type: string
+  Ratings: Array<{
+    Source: string
+    Value: string
+  }>
 }
 
 type TypeMovieSearch = {
@@ -44,7 +48,10 @@ export const useMovieStore = defineStore('movie', {
     return {
       topRatedMovies: [] as TypeMovie[],
       searchedList: [] as TypeMovieSearch[],
-      searchedListError: ''
+      searchedListError: '',
+      showMovieModal: false,
+      currentMovie: {} as TypeMovie,
+      movieModalLoader: false,
     }
   },
   actions: {
@@ -86,6 +93,26 @@ export const useMovieStore = defineStore('movie', {
         
       } finally {
 
+      }
+    },
+    async getMovieById(id: string) {
+      try {
+        const response = await fetch(`${baseURL}&i=${id}`)
+        const data = await response.json()
+        return data
+      } catch (error) {
+        
+      }
+    },
+    async toggleMovieModal(movie: TypeMovie | TypeMovieSearch | null) {
+      this.showMovieModal = !this.showMovieModal
+      if (movie) {
+        try {
+          this.movieModalLoader = true
+          this.currentMovie = await this.getMovieById(movie.imdbID) 
+        } finally {
+          this.movieModalLoader = false
+        }
       }
     },
     resetSearch() {

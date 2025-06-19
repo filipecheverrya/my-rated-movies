@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { useMovieStore } from '../store/movies'
 import IconIMDB from '/icon-imdb.svg'
+import Movie from './modals/Movie.vue'
 
 const movieStore = useMovieStore()
 
@@ -11,6 +12,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <template v-if="movieStore.showMovieModal">
+    <Movie />
+  </template>
   <div class="px-6 mt-8">
     <template v-if="movieStore.searchedListError">
       <p class="text-2xl text-center text-red-500 font-semibold mt-5">
@@ -22,27 +26,29 @@ onMounted(() => {
         Top Movies of 2025
       </h2>
       <ul class="grid grid-col-1 lg:grid-cols-5 gap-6 lg:gap-2 mt-6">
-        <li v-for="item in movieStore.topRatedMovies">
-          <img :src="item.Poster" :alt="item.Title" class="block mx-auto h-[400px]" />
-          <div class="flex flex-col gap-2 max-w-3xs mx-auto">
-            <h3 class="text-lg text-center mt-4 font-semibold">
-              {{ item.Title }}
-            </h3>
-            <p class="text-sm">
-              {{ item.Plot }}
-            </p>
-            <div class="flex items-center justify-center gap-4">
-              <img :src="IconIMDB" alt="IMDb" :width="80" :height="80" />
-              <div>
-                <p class="text-base">
-                  <span class="font-bold">Rating: </span> {{ item.imdbRating }}
-                </p>
-                <p class="text-base">
-                  <span class="font-bold">Votes: </span> {{ item.imdbVotes }}
-                </p>
+        <li v-for="item in movieStore.topRatedMovies" :key="item.Title">
+          <button class="w-full" @click="movieStore.toggleMovieModal(item)">
+            <img :src="item.Poster" :alt="item.Title" class="block mx-auto h-[400px]" />
+            <div class="flex flex-col gap-2 max-w-3xs mx-auto">
+              <h3 class="text-lg text-center mt-4 font-semibold">
+                {{ item.Title }}
+              </h3>
+              <p class="text-sm">
+                {{ item.Plot }}
+              </p>
+              <div class="flex items-center justify-center gap-4">
+                <img :src="IconIMDB" alt="IMDb" :width="80" :height="80" />
+                <div>
+                  <p class="text-base">
+                    <span class="font-bold">Rating: </span> {{ item.imdbRating }}
+                  </p>
+                  <p class="text-base">
+                    <span class="font-bold">Votes: </span> {{ item.imdbVotes }}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </button>
         </li>
       </ul>
     </template>
@@ -52,7 +58,9 @@ onMounted(() => {
       </h2>
       <ul class="flex flex-wrap mx-auto w-full items-center justify-center gap-2 my-6">
         <li v-for="item in movieStore.searchedList" :key="item.Title">
-          <img :src="item.Poster" :alt="item.Title" class="block mx-auto max-w-[150px]" />
+          <button class="cursor-pointer" @click="movieStore.toggleMovieModal(item)">
+            <img :src="item.Poster" :alt="item.Title" class="block mx-auto max-w-[150px]" />
+          </button>
         </li>
       </ul>
     </template>
