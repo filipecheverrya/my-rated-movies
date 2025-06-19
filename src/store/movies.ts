@@ -60,21 +60,23 @@ export const useMovieStore = defineStore('movie', {
         return null
       }
       const storage: string | null = window.localStorage.getItem(STORAGE_NAME)
-      const storedMovies: [] = storage && JSON.parse(storage)
+      const storedMovies: [] = storage && storage !== 'undefined' && JSON.parse(storage)
       if (storedMovies?.length) {
         storedMovies.map(item => this.topRatedMovies.push(item))
         return null
       }
       try {
-        top5MoviesIds.map(async id => {
-          const response = await fetch(`${baseURL}&i=${id}`)
-          const data = await response.json()
-          this.topRatedMovies.push(data)
-        })
+        const data = await Promise.all(
+          top5MoviesIds.map(async id => {
+            const response = await fetch(`${baseURL}&i=${id}`)
+            const data = await response.json()
+            this.topRatedMovies.push(data)
+            return data
+          })
+        )
+        window.localStorage.setItem(STORAGE_NAME, JSON.stringify(data))
       } catch (error) {
         
-      } finally {
-        window.localStorage.setItem(STORAGE_NAME, JSON.stringify(this.topRatedMovies))
       }
     },
     async getMoviesByString(value: string | undefined) {
